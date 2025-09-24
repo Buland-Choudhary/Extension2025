@@ -1,0 +1,118 @@
+/* Make results window fill available width and be responsive */
+body {
+    width: auto !important;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+h4 {
+    font-size: 18px;
+    margin: 18px 0 10px 0;
+}
+
+#statusText {
+    font-size: 16px;
+}
+
+#usageInfo {
+    font-size: 13px;
+}
+
+/* Filter controls: keep buttons on one row with four columns */
+#filterControls {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#filterControls .filter-btn {
+    width: 100%;
+}
+
+/* Use full width for summary */
+#comparisonSummary {
+    width: 100%;
+    font-size: 15px;
+}
+
+/* Responsive grid for comparison fields */
+#comparisonFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.comparison-item-key {
+    font-size: 15px;
+}
+
+.comparison-item-explanation {
+    font-size: 14px;
+}
+
+/* Responsive grid for extracted result items */
+#resultsContainer {
+    margin-top: 24px;
+    max-height: none;
+    border-top: 1px solid #ddd;
+    padding-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.result-item {
+    padding: 12px;
+}
+
+.result-item-key {
+    font-size: 15px;
+}
+
+.result-item-value {
+    font-size: 14px;
+}
+
+/* Medium screens: two columns */
+@media (min-width: 900px) {
+    #comparisonFields {
+        grid-template-columns: 1fr 1fr;
+    }
+    #resultsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+    h3 {
+        text-align: left;
+        margin-left: 4px;
+        font-size: 24px;
+    }
+    h4 {
+        font-size: 20px;
+    }
+}
+
+/* Large screens: three columns if space allows */
+@media (min-width: 1300px) {
+    #comparisonFields {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    #resultsContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Ensure comparison items and result items behave well in grid */
+.comparison-item, .result-item {
+    width: 100%;
+    box-sizing: border-box;
+} 
