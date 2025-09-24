@@ -25,10 +25,16 @@ function renderComparisonData(data) {
     comparisonSummary.textContent = data.summary_explanation || 'No summary available.';
 
     const colors = ['green', 'yellow', 'red', 'grey'];
+    const labels = {
+        green: 'Strong Matches',
+        yellow: 'Partial Matches',
+        red: 'Gaps / Mismatches',
+        grey: 'Unknown / Unspecified'
+    };
     colors.forEach(color => {
         const btn = document.createElement('button');
         btn.className = `filter-btn color-${color}`;
-        btn.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+        btn.textContent = labels[color] || color.charAt(0).toUpperCase() + color.slice(1);
         btn.dataset.color = color;
         filterControls.appendChild(btn);
     });

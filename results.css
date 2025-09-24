@@ -1,4 +1,4 @@
-/* Make results window fill available width and be responsive */
+/* Base layout and typography */
 body {
     width: auto !important;
     max-width: none;
@@ -7,83 +7,180 @@ body {
     padding: 20px;
     font-size: 16px;
     line-height: 1.6;
+    color: #1f2937; /* neutral-800 */
+    background: #f7fafc; /* subtle gray background */
+}
+
+/* Centered content container with max width for readability */
+#resultsView {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h3 {
-    font-size: 22px;
-    margin-bottom: 12px;
+    font-size: 24px;
+    margin: 6px 0 12px 0;
+    color: #111827; /* neutral-900 */
 }
 
 h4 {
-    font-size: 18px;
-    margin: 18px 0 10px 0;
+    font-size: 20px;
+    margin: 18px 0 12px 0;
+    color: #111827;
 }
 
 #statusText {
     font-size: 16px;
+    text-align: center;
+    color: #4b5563; /* neutral-600 */
 }
 
 #usageInfo {
-    font-size: 13px;
+    font-size: 14px;
+    text-align: center;
+    color: #6b7280; /* neutral-500 */
 }
 
-/* Filter controls: keep buttons on one row with four columns */
+/* Summary chip */
+#comparisonSummary {
+    width: 100%;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+/* Sticky, single-row filter controls with pill buttons */
 #filterControls {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f7fafc;
+    padding: 6px 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 #filterControls .filter-btn {
     width: 100%;
+    border-radius: 9999px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* Use full width for summary */
-#comparisonSummary {
-    width: 100%;
-    font-size: 15px;
+/* Color-tinted filter buttons */
+.filter-btn.color-green {
+    background-color: #e6f9f1; /* green-50 */
+    border-color: #a7f3d0;
+    color: #065f46; /* green-800 */
+}
+.filter-btn.color-green:hover {
+    background-color: #d1fae5;
+}
+.filter-btn.color-green.active {
+    background-color: #34d399;
+    color: #ffffff;
+    border-color: #34d399;
 }
 
-/* Responsive grid for comparison fields */
+.filter-btn.color-yellow {
+    background-color: #fffbeb; /* amber-50 */
+    border-color: #fde68a;
+    color: #92400e; /* amber-800 */
+}
+.filter-btn.color-yellow:hover {
+    background-color: #fef3c7;
+}
+.filter-btn.color-yellow.active {
+    background-color: #fbbf24;
+    color: #111827;
+    border-color: #fbbf24;
+}
+
+.filter-btn.color-red {
+    background-color: #fef2f2; /* red-50 */
+    border-color: #fecaca;
+    color: #7f1d1d; /* red-800 */
+}
+.filter-btn.color-red:hover {
+    background-color: #fee2e2;
+}
+.filter-btn.color-red.active {
+    background-color: #f87171;
+    color: #ffffff;
+    border-color: #f87171;
+}
+
+.filter-btn.color-grey {
+    background-color: #f3f4f6; /* gray-100 */
+    border-color: #e5e7eb;
+    color: #374151; /* gray-700 */
+}
+.filter-btn.color-grey:hover {
+    background-color: #e5e7eb;
+}
+.filter-btn.color-grey.active {
+    background-color: #9ca3af;
+    color: #111827;
+    border-color: #9ca3af;
+}
+
+/* Comparison Fields grid */
 #comparisonFields {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
 }
 
-.comparison-item-key {
-    font-size: 15px;
+/* Card polish */
+.comparison-item, .result-item {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb; /* neutral-200 */
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
-.comparison-item-explanation {
-    font-size: 14px;
-}
-
-/* Responsive grid for extracted result items */
-#resultsContainer {
-    margin-top: 24px;
-    max-height: none;
-    border-top: 1px solid #ddd;
-    padding-top: 12px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
+.comparison-item {
+    padding: 12px 14px;
 }
 
 .result-item {
-    padding: 12px;
+    padding: 14px 16px;
 }
 
-.result-item-key {
+/* Accent borders for comparison items */
+.comparison-item { border-left: 6px solid #d1d5db; }
+.comparison-item.color-green { border-left-color: #34d399; }
+.comparison-item.color-yellow { border-left-color: #fbbf24; }
+.comparison-item.color-red { border-left-color: #f87171; }
+.comparison-item.color-grey { border-left-color: #9ca3af; }
+
+/* Keys and content sizes */
+.comparison-item-key, .result-item-key {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.comparison-item-explanation, .result-item-value {
     font-size: 15px;
+    color: #374151;
 }
 
-.result-item-value {
-    font-size: 14px;
+/* Extracted Data grid */
+#resultsContainer {
+    margin-top: 28px;
+    max-height: none;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
 }
 
-/* Medium screens: two columns */
+/* Responsive columns for content */
 @media (min-width: 900px) {
     #comparisonFields {
         grid-template-columns: 1fr 1fr;
@@ -94,14 +191,13 @@ h4 {
     h3 {
         text-align: left;
         margin-left: 4px;
-        font-size: 24px;
+        font-size: 26px;
     }
     h4 {
-        font-size: 20px;
+        font-size: 22px;
     }
 }
 
-/* Large screens: three columns if space allows */
 @media (min-width: 1300px) {
     #comparisonFields {
         grid-template-columns: 1fr 1fr 1fr;
@@ -109,10 +205,4 @@ h4 {
     #resultsContainer {
         grid-template-columns: 1fr 1fr 1fr;
     }
-}
-
-/* Ensure comparison items and result items behave well in grid */
-.comparison-item, .result-item {
-    width: 100%;
-    box-sizing: border-box;
 } 
