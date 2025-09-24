@@ -132,53 +132,49 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please paste a job description.');
             return;
         }
-        
-        // Switch to loading view
-        inputView.style.display = 'none';
-        resultsView.style.display = 'block';
-        resultsContainer.innerHTML = '';
-        usageInfo.innerHTML = '';
-        comparisonSummary.innerHTML = '';
-        filterControls.innerHTML = '';
-        comparisonFields.innerHTML = '';
-        analyzeBtn.disabled = true;
-        updateStatus('Analyzing...');
 
         try {
-            updateStatus('Extracting job details from description...');
-            const { data: extractedData, usage: extractionUsage } = await extract(jdText);
-            console.log('Extraction complete. Result:', extractedData);
-            
-            updateStatus('Saving extracted data...');
-            await simpleCacheSet('last_extracted_data', extractedData);
-            console.log('Extracted data has been saved.');
+            await chrome.storage.local.set({ 'pending_jd_text': jdText });
+            await chrome.windows.create({
+                type: 'popup',
+                url: chrome.runtime.getURL('results.html'),
+                width: 900,
+                height: 900
+            });
+        } catch (openErr) {
+            console.error('Failed to open results window, falling back to inline rendering:', openErr);
+            // Switch to loading view (fallback)
+            inputView.style.display = 'none';
+            resultsView.style.display = 'block';
+            resultsContainer.innerHTML = '';
+            usageInfo.innerHTML = '';
+            comparisonSummary.innerHTML = '';
+            filterControls.innerHTML = '';
+            comparisonFields.innerHTML = '';
+            analyzeBtn.disabled = true;
+            updateStatus('Analyzing...');
 
-            // Render extracted data as soon as it is available
-            renderExtractedData(extractedData);
+            try {
+                updateStatus('Extracting job details from description...');
+                const { data: extractedData, usage: extractionUsage } = await extract(jdText);
+                await simpleCacheSet('last_extracted_data', extractedData);
+                renderExtractedData(extractedData);
 
-            updateStatus('Comparing with your profile...');
-            const { data: comparisonResult, usage: comparisonUsage } = await compareJd(extractedData);
-            console.log('Comparison complete. Result:', comparisonResult);
+                updateStatus('Comparing with your profile...');
+                const { data: comparisonResult, usage: comparisonUsage } = await compareJd(extractedData);
+                await simpleCacheSet('last_comparison_result', comparisonResult);
+                updateStatus('Analysis Complete');
+                renderComparisonData(comparisonResult);
 
-            updateStatus('Saving comparison results...');
-            await simpleCacheSet('last_comparison_result', comparisonResult);
-            console.log('Comparison result has been saved.');
-
-            updateStatus('Analysis Complete');
-            // Render the comparison results above the already-visible extracted data
-            renderComparisonData(comparisonResult);
-
-            // Display token usage
-            const totalTokens = (extractionUsage?.total_tokens || 0) + (comparisonUsage?.total_tokens || 0);
-            usageInfo.textContent = `Total tokens used: ${totalTokens}`;
-
-        } catch (error) {
-            console.error('An error occurred during analysis:', error);
-            updateStatus('An error occurred. See console for details.');
-            alert('An error occurred. Check the console for details.');
-        } finally {
-            analyzeBtn.disabled = false;
-            // We don't re-enable the analyze button or switch views back automatically
+                const totalTokens = (extractionUsage?.total_tokens || 0) + (comparisonUsage?.total_tokens || 0);
+                usageInfo.textContent = `Total tokens used: ${totalTokens}`;
+            } catch (error) {
+                console.error('An error occurred during analysis:', error);
+                updateStatus('An error occurred. See console for details.');
+                alert('An error occurred. Check the console for details.');
+            } finally {
+                analyzeBtn.disabled = false;
+            }
         }
     });
 });

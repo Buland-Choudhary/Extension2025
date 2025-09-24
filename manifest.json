@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "Analyzes job descriptions against your profile.",
   "permissions": [
-    "storage"
+    "storage",
+    "windows"
   ],
   "action": {
     "default_popup": "popup.html"
