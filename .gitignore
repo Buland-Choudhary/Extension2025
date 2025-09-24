@@ -1,0 +1,19 @@
+# Ignore environment files
+.env
+
+# Ignore the configuration file containing secrets
+myExtension/config.js
+
+config.js
+
+# Dependencies
+/node_modules
+
+# Local configuration
+config.local.js
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

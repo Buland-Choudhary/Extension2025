@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Analyzer</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <h3>Job Description Analyzer</h3>
+    <div id="inputView">
+        <textarea id="jobDescription" placeholder="Paste job description here..."></textarea>
+        <button id="analyzeBtn">Analyze</button>
+    </div>
+    <div id="resultsView" style="display: none;">
+        <p id="statusText"></p>
+        <div id="usageInfo"></div>
+        <div id="comparisonContainer">
+            <div id="comparisonSummary"></div>
+            <div id="filterControls"></div>
+            <div id="comparisonFields"></div>
+        </div>
+        <div id="resultsContainer"></div>
+    </div>
+    <script src="popup.js" type="module"></script>
+</body>
+</html>
